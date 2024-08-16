@@ -4,7 +4,7 @@ module "security_group" {
 
   name        = "eks-bastion-sg"
   description = "Security group for EKS bastion host"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id      = data.aws_vpc.selected.id
 
   ingress_with_cidr_blocks = [
     for port in [22, 80, 443] : {
@@ -32,11 +32,9 @@ module "eks_bastion" {
   ami                         = "ami-0edc5427d49d09d2a"
   instance_type               = "t2.micro"
   key_name                    = "mykeypair"
-  subnet_id                   = module.vpc.public_subnets[0]
+  subnet_id                   = data.aws_subnets.public.ids[0]
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = "true"
 
   user_data = file("${path.module}/bastion-userdata.sh")
-
-  depends_on = [module.eks]
 }
