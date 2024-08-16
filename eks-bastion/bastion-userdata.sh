@@ -26,7 +26,7 @@ mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && sudo mv ./kubectl /usr/l
 echo 'export PATH=$HOME/bin:$PATH' >> /home/ec2-user/.bashrc 
 
 # ec2-user로 전환해 명령어 실행
-# root로 aks eks update-kubeconfig 명령어 실행하면 ec2-user에 kubectl 설정 안됨
+# root로 aws eks update-kubeconfig 명령어 실행하면 ec2-user에 kubectl 설정 안됨
 # k8s 설정을 eks의 pjt-eks로 설정
 su - ec2-user -c 'bash -s' <<'EOF'
 aws eks update-kubeconfig --name pjt-eks --region ap-northeast-2
@@ -34,6 +34,7 @@ EOF
 
 # git 설치
 sudo yum install git -y
+cd /home/ec2-user && git clone https://github.com/ParkJoonTae/tf-infra.git && chown ec2-user tf-infra -R
 
 # helm 설치
 cd /home/ec2-user && curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
