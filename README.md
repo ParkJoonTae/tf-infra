@@ -5,29 +5,6 @@
 ## 인프라 구성도
 ![인프라 구성도](images/infra-diagram.png)
 
-## 구축 결과
-```
-curl -X POST {ALB 경로}/users \
--H "Content-Type: application/json" \
--d '{"name":"Park Joon Tae","email":"pjt@example.com"}'
-
-curl -X GET {ALB 경로}/users
-
-curl -X GET {ALB 경로}/users/1
-
-curl -X PUT {ALB 경로}/users/1 \
--H "Content-Type: application/json" \
--d '{"name":"PPP","email":"PPP@example.com"}'
-
-curl -X DELETE {ALB 경로}/users/1
-
-curl -X GET {ALB 경로}/health
-```
-![api-server-tests 이미지](images/api-server-tests.png)
-![api-server-logs 이미지](images/api-server-logs.png)
-![grafana-cluster-cpu 이미지](images/grafana-cluster-cpu.png)
-![grafana-workload 이미지](images/grafana-workload.png)
-
 ## Repository 구조
 
 ```plaintext
@@ -104,3 +81,26 @@ Helm Chart 테스트: `helm install rustapi rustapi-helm-chart`
     - **ingress.yaml**: rustapi ingress 파일입니다.
     - **pvc.yaml**: PVC를 정의해 데이터 저장소를 설정합니다.
     - **service.yaml**: rustapi 서버와 postgresql DB service 파일입니다.
+
+## 구축 결과
+```
+curl -X POST {ALB 경로}/users \
+-H "Content-Type: application/json" \
+-d '{"name":"Park Joon Tae","email":"pjt@example.com"}'
+
+curl -X GET {ALB 경로}/users
+
+curl -X GET {ALB 경로}/users/1
+
+curl -X PUT {ALB 경로}/users/1 \
+-H "Content-Type: application/json" \
+-d '{"name":"PPP","email":"PPP@example.com"}'
+
+curl -X DELETE {ALB 경로}/users/1
+
+curl -X GET {ALB 경로}/health
+```
+![api-server-tests 이미지](images/api-server-tests.png)
+![api-server-logs 이미지](images/api-server-logs.png)
+![grafana-cluster-cpu 이미지](images/grafana-cluster-cpu.png)
+![grafana-workload 이미지](images/grafana-workload.png)
