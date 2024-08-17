@@ -51,7 +51,7 @@ Terraform으로 `VPC`에 `2개의 public/private Subnet`과 `IGW`, `NAT GW`를 �
 - **vpc.tf**: VPC, 서브넷, 라우팅 테이블 등을 포함한 네트워크 인프라를 구성합니다.
 
 ### 2. EKS 클러스터 설정 (eks 디렉토리)
-Terraform으로 `EKS`와 `Helm`을 사용한 `ALB Controller, Cluster Autoscaler, API Server, Prometheus, Grafana`와 `EBS-CSI` 애드온을 구성합니다.
+Terraform으로 `EKS`와 `Helm`을 사용한 `ALB Controller`, `Cluster Autoscaler`, `API Server`, `PostgreSQL`, `Prometheus`, `Grafana`와 `EBS-CSI` 애드온을 구성합니다.
 
 - **provider.tf**: AWS, Kubernetes, Helm, S3 상태관리 provider 설정 파일입니다.
 - **data.tf**: data 참조 파일입니다.
@@ -75,6 +75,7 @@ Terraform으로 `EKS`에 접근하기 위한 `Bastion 호스트`를 구성합니
 
 ### 4. Rust API 서버 설정 (rustapi-helm-chart 디렉토리)
 `API Server`, `postgresql`배포를 `Helm Chart`를 통해 관리합니다.
+Helm Chart 테스트: `helm install rustapi rustapi-helm-chart`
 
 - **Chart.yaml**: Helm 차트에 대한 메타데이터를 정의합니다.
 - **values.yaml**: 이미지, 포트, DB정보, 경로 등을 설정합니다.
