@@ -6,13 +6,13 @@ terraform {
   }
 
   # 테라폼 상태 S3 관리
-  # backend "s3" {
-  #   bucket         = "ksi05298-terraform-bucket"
-  #   key            = "global/s3/terraform.tfstate"
-  #   region         = "ap-northeast-2"
-  #   dynamodb_table = "terraform-locks"
-  #   encrypt        = true
-  # }
+  backend "s3" {
+    bucket         = "ksi05298-terraform-bucket"
+    key            = "global/s3/terraform.tfstate"
+    region         = "ap-northeast-2"
+    dynamodb_table = "terraform-locks"
+    encrypt        = true
+  }
 }
 
 provider "aws" {

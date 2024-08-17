@@ -2,13 +2,33 @@
 
 이 리포지토리는 AWS에서 EKS 클러스터와 관련된 인프라를 Terraform을 사용하여 구축하고 관리하기 위한 코드들을 포함하고 있습니다.
 
+## 인프라 구성도
+![인프라 구성도](images/infra-diagram.png)
+
 ## 구축 결과
+```
+curl -X POST {ALB 경로}/users \
+-H "Content-Type: application/json" \
+-d '{"name":"Park Joon Tae","email":"pjt@example.com"}'
+
+curl -X GET {ALB 경로}/users
+
+curl -X GET {ALB 경로}/users/1
+
+curl -X PUT {ALB 경로}/users/1 \
+-H "Content-Type: application/json" \
+-d '{"name":"PPP","email":"PPP@example.com"}'
+
+curl -X DELETE {ALB 경로}/users/1
+
+curl -X GET {ALB 경로}/health
+```
 ![api-server-tests 이미지](images/api-server-tests.png)
 ![api-server-logs 이미지](images/api-server-logs.png)
 ![grafana-cluster-cpu 이미지](images/grafana-cluster-cpu.png)
 ![grafana-workload 이미지](images/grafana-workload.png)
 
-## 리포지토리 구조
+## Repository 구조
 
 ```plaintext
 tf-infra/
