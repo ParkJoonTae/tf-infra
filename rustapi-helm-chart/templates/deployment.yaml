@@ -1,0 +1,58 @@
+# rustapi deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rustapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rustapi
+  template:
+    metadata:
+      labels:
+        app: rustapi
+    spec:
+      containers:
+        - name: rustapi
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_URL
+              value: "postgres://{{ .Values.postgresql.username }}:{{ .Values.postgresql.password }}@rustapi-db.default.svc.cluster.local:{{ .Values.postgresql.port }}/{{ .Values.postgresql.database }}"
+---
+# rustapi-db(postgresql) deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rustapi-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rustapi-db
+  template:
+    metadata:
+      labels:
+        app: rustapi-db
+    spec:
+      containers:
+        - name: postgres
+          image: "{{ .Values.postgresql.image }}"
+          ports:
+            - containerPort: {{ .Values.postgresql.port }}
+          env:
+            - name: POSTGRES_USER
+              value: "{{ .Values.postgresql.username }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ .Values.postgresql.password }}"
+            - name: POSTGRES_DB
+              value: "{{ .Values.postgresql.database }}"
+          volumeMounts:
+            - name: pgdata
+              mountPath: /var/lib/postgresql/new_pgdata
+      volumes:
+        - name: pgdata
+          persistentVolumeClaim:
+            claimName: pgdata-pvc

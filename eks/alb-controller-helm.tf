@@ -1,3 +1,4 @@
+# alb 컨트롤러 helm 배포
 resource "helm_release" "aws_load_balancer_controller" {
   provider = helm
   depends_on = [module.eks]

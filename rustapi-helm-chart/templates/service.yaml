@@ -1,0 +1,25 @@
+# rustapi service
+apiVersion: v1
+kind: Service
+metadata:
+  name: rustapi
+spec:
+  selector:
+    app: rustapi
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: 8080
+---
+# rustapi-db(postgresql) service
+apiVersion: v1
+kind: Service
+metadata:
+  name: rustapi-db
+spec:
+  selector:
+    app: rustapi-db
+  ports:
+    - protocol: TCP
+      port: {{ .Values.postgresql.port }}
+      targetPort: 5432

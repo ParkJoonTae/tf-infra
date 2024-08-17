@@ -1,3 +1,4 @@
+# alb 컨트롤러 정책
 resource "aws_iam_policy" "alb_controller" {
   name        = "pjt-alb-controller-policy"
   description = "Policy for the AWS ALB controller"
@@ -254,7 +255,7 @@ resource "aws_iam_policy" "alb_controller" {
 EOF
 }
 
-
+# alb 컨트롤러 역할
 resource "aws_iam_role" "alb_controller_role" {
   name = "alb-controller-role"
 
@@ -265,13 +266,13 @@ resource "aws_iam_role" "alb_controller_role" {
     {
       "Effect": "Allow",
       "Principal": {
-        "Federated": "arn:aws:iam::934964956331:oidc-provider/${module.eks.cluster_oidc_issuer_url}"
+        "Federated": "arn:aws:iam::934964956331:oidc-provider/oidc.eks.ap-northeast-2.amazonaws.com/id/65375CA972F2C6CCE7F1A0DECE1D5B30"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
-          "${module.eks.cluster_oidc_issuer_url}:sub": "system:serviceaccount:kube-system:alb-iamserviceaccount",
-          "${module.eks.cluster_oidc_issuer_url}:aud": "sts.amazonaws.com"
+          "oidc.eks.ap-northeast-2.amazonaws.com/id/65375CA972F2C6CCE7F1A0DECE1D5B30:sub": "system:serviceaccount:kube-system:alb-iamserviceaccount",
+          "oidc.eks.ap-northeast-2.amazonaws.com/id/65375CA972F2C6CCE7F1A0DECE1D5B30:aud": "sts.amazonaws.com"
         }
       }
     }
@@ -280,6 +281,7 @@ resource "aws_iam_role" "alb_controller_role" {
 EOF
 }
 
+# alb 컨트롤러 정책 역할 연결
 resource "aws_iam_role_policy_attachment" "alb_controller_policy_attachment" {
   role       = aws_iam_role.alb_controller_role.name
   policy_arn = aws_iam_policy.alb_controller.arn

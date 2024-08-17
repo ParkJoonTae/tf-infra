@@ -13,6 +13,11 @@ export AWS_ACCESS_KEY_ID=<ACCESS_KEY_ID>
 export AWS_SECRET_ACCESS_KEY=<SECRET_ACCESS_KEY>
 EOL
 
+# terraform 설치
+sudo yum install -y yum-utils shadow-utils
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+sudo yum -y install terraform
+
 # eksctl 설치
 PLATFORM=$(uname -s)_amd64
 curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz"
@@ -27,9 +32,9 @@ echo 'export PATH=$HOME/bin:$PATH' >> /home/ec2-user/.bashrc
 
 # ec2-user로 전환해 명령어 실행
 # root로 aws eks update-kubeconfig 명령어 실행하면 ec2-user에 kubectl 설정 안됨
-# k8s 설정을 eks의 pjt-eks로 설정
+# k8s 설정을 eks의 pjt-eks-cluster로 설정
 su - ec2-user -c 'bash -s' <<'EOF'
-aws eks update-kubeconfig --name pjt-eks --region ap-northeast-2
+aws eks update-kubeconfig --name pjt-eks-cluster --region ap-northeast-2
 EOF
 
 # git 설치
@@ -40,3 +45,10 @@ cd /home/ec2-user && git clone https://github.com/ParkJoonTae/tf-infra.git && ch
 cd /home/ec2-user && curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 cd /home/ec2-user && chmod 700 get_helm.sh
 /home/ec2-user/get_helm.sh
+
+# aws terraform 자동완성, 별칭
+complete -C '/usr/local/bin/aws_completer' aws
+complete -C /usr/bin/terraform terraform
+complete -C /usr/bin/terraform tf
+alias tf='terraform'
+alias tfap='tf apply --auto-approve'

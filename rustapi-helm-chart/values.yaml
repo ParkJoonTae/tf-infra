@@ -1,0 +1,31 @@
+# rustapi 이미지
+image:
+  repository: ksi05298/rustapi
+  tag: "1.0.1"
+  pullPolicy: IfNotPresent
+
+# rustapi service
+service:
+  type: ClusterIP
+  port: 8080
+
+# rustapi-db(postgresql)
+postgresql:
+  image: postgres:12
+  username: postgres
+  password: postgres
+  database: postgres
+  port: 5432
+
+# pvc
+persistence:
+  enabled: true
+  size: 100Mi
+  storageClass: ""
+
+resources: {}
+
+# rustapi ingress
+ingress:
+  subnets: "subnet-08f65cc6171525bf5, subnet-0712ddaa3da086b5b"
+  path: "/"

@@ -1,3 +1,4 @@
+# Bastion 호스트 보안 그룹
 module "security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "4.0.0"
@@ -24,6 +25,7 @@ module "security_group" {
   ]
 }
 
+# EKS Bastion 호스트
 module "eks_bastion" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "3.0.0"

@@ -1,0 +1,22 @@
+# grafana ingress
+grafana:
+  ingress:
+    enabled: true
+    ingressClassName: alb
+    annotations:
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/group.name: grafana-pjt-eks-alb
+      alb.ingress.kubernetes.io/subnets: subnet-08f65cc6171525bf5, subnet-0712ddaa3da086b5b
+      alb.ingress.kubernetes.io/backend-protocol: HTTP
+      alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    rules:
+      - http:
+          paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: prometheus-grafana
+                  port:
+                    number: 80
