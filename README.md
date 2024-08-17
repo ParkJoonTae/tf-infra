@@ -72,7 +72,8 @@ Terraform으로 `EKS`에 접근하기 위한 `Bastion 호스트`를 구성합니
 
 ### 4. Rust API 서버 설정 (rustapi-helm-chart 디렉토리)
 `API Server`, `postgresql`배포를 `Helm Chart`를 통해 관리합니다.
-`Helm Chart 테스트: helm install rustapi rustapi-helm-chart`
+
+Helm Chart 테스트: `helm install rustapi rustapi-helm-chart`
 
 - **Chart.yaml**: Helm 차트에 대한 메타데이터를 정의합니다.
 - **values.yaml**: 이미지, 포트, DB정보, 경로 등을 설정합니다.
